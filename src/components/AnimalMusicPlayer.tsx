@@ -71,7 +71,12 @@ const AnimalMusicPlayer: React.FC<PlayerProps> = ({ animalName, audioFile, anima
       // 獲取頻率數據 (用於分析低頻節奏，如獅子的重拍)
       const buffer = analyserRef.current!.getValue();
       // 我們只關注前幾個頻率桶 (通常是低音)
-      const bassValue = buffer.slice(0, 4).reduce((a, b) => a + b, 0) / 4;
+      const draw = () => {
+      // 獲取頻率數據
+      const buffer = analyserRef.current!.getValue();
+    
+      // 修正後的第 74 行：使用 Array.from() 轉換為標準陣列
+      const bassValue = Array.from(buffer.slice(0, 4)).reduce((a, b) => a + b, 0) / 4;
       
       // 將數據映射到視覺大小 (例如: 圓形大小或節奏條高度)
       // bassValue 的範圍約在 -100 到 0 之間 (分貝)
