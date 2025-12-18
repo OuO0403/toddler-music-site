@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  /* 使用舒服的奶油黃到粉橘色漸層 */
+  /* 使用標準 CSS 語法 */
   background: linear-gradient(135deg, #fff9e6 0%, #ffedcc 100%);
-  min-h-screen;
+  min-height: 100vh; /* 這是 min-h-screen 的標準寫法 */
   overflow-x: hidden;
   font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft JhengHei', sans-serif;
 }
