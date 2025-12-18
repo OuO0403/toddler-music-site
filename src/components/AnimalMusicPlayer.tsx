@@ -53,7 +53,12 @@ export default function AnimalMusicPlayer({ animalName, audioFile, animalColor }
     
     const draw = () => {
       const buffer = analyserRef.current!.getValue();
-      const bassValue = Array.from(buffer.slice(0, 4)).reduce((a, b) => a + b, 0) / 4;
+      let sum = 0;
+      const numBins = 4; // 我們取前 4 個頻率桶
+      for (let i = 0; i < numBins; i++) {
+        sum += buffer[i] as number; 
+      }
+      const bassValue = sum / numBins;
       const normalizedValue = 1 - (bassValue / -100); 
       const sizeScale = 1 + normalizedValue * 0.5;
 
