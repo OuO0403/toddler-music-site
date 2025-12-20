@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const animals = [
@@ -11,30 +11,39 @@ const animals = [
   { id: 'lion', name: '獅子', icon: '🦁', color: '#F9A825' },
 ];
 
-export default function HomePage() {
-  const router = useRouter();
-
+export default function Home() {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center py-10 px-4">
-      <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl mb-12 italic">音樂動物園 🎵</h1>
+    <main className="min-h-screen bg-[#FDFCF0] flex flex-col items-center py-10 px-4">
+      {/* 標題區 */}
+      <motion.h1 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="text-5xl font-black text-[#4A4A4A] mb-12 tracking-wider italic"
+      >
+        音樂動物園
+      </motion.h1>
 
-      {/* 修正：強制 3 個一排 (grid-cols-3)，間距 72px */}
-      <div className="grid grid-cols-3 gap-x-6 gap-y-[48px] w-full max-w-6xl justify-items-center">
-        {animals.map((a) => (
-          <div key={a.id} className="flex flex-col items-center w-full">
-            <motion.button
-              layoutId={`bg-${a.id}`}
-              onClick={() => router.push(`/${a.id}`)}
-              whileHover={{ scale: 1.1 }}
-              className="zoo-circle-btn relative w-full aspect-square max-w-[280px]"
-              style={{ backgroundColor: a.color }}
+      {/* 按鈕網格：2x3 佈局 */}
+      <div className="grid grid-cols-2 gap-8 w-full max-w-2xl">
+        {animals.map((animal) => (
+          <Link key={animal.id} href={`/${animal.id}`} className="flex flex-col items-center">
+            <motion.div
+              layoutId={`bg-${animal.id}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full aspect-square rounded-[40px] flex flex-col items-center justify-center cursor-pointer shadow-lg hover:shadow-2xl transition-shadow relative overflow-hidden"
+              style={{ backgroundColor: animal.color }}
             >
-              <span className="text-[80px] md:text-[240px] select-none pointer-events-none">{a.icon}</span>
-            </motion.button>
-            <span className="mt-[12px] text-zoo-36 text-white drop-shadow-lg">{a.name}</span>
-          </div>
+              <span className="text-[80px] mb-2 select-none">{animal.icon}</span>
+              <span className="text-2xl font-bold text-white tracking-widest">{animal.name}</span>
+            </motion.div>
+          </Link>
         ))}
       </div>
-    </div>
+
+      <footer className="mt-16 text-[#A0A0A0] text-sm">
+        點擊動物開始練習節奏吧！
+      </footer>
+    </main>
   );
 }
