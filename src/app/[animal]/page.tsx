@@ -24,12 +24,14 @@ export default function AnimalPage() {
 
   const togglePlay = () => {
     if (audioRef.current) {
-      if (isPlaying) { audioRef.current.pause(); } 
-      else { 
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
         audioRef.current.currentTime = 0;
-        audioRef.current.play(); 
+        audioRef.current.play();
+        setIsPlaying(true);
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -38,52 +40,56 @@ export default function AnimalPage() {
       layoutId={`circle-bg-${animalId}`}
       initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
+      exit={{ borderRadius: '100%' }} 
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-center z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 🏠 返回鍵：脫離中央容器，強制鎖定在視窗左上角 */}
-      <Link href="/" className="fixed top-10 left-10 text-[60px] md:text-[80px] drop-shadow-2xl z-[300] hover:scale-110 active:scale-90 transition-transform">
+      {/* 🏠 返回鍵：脫離中央容器限制，強制固定在視窗最左上角 */}
+      <Link href="/" className="fixed top-8 left-8 text-[60px] md:text-[80px] drop-shadow-2xl z-[300] hover:scale-110 active:scale-90 transition-transform">
         🏠
       </Link>
 
-      <div className="w-full max-w-4xl flex flex-col items-center gap-4 px-6">
-        <h2 className="text-7xl md:text-9xl font-black text-white drop-shadow-lg italic">{data.name}</h2>
-        
-        {/* 特點標籤：獨立框住 */}
-        <div className="px-8 py-2 rounded-full border-4 border-white bg-white/20 text-white mb-2">
-          <p className="text-xl md:text-3xl font-bold">{data.trait}</p>
+      <div className="flex flex-col items-center w-full max-w-4xl gap-4 px-6">
+        {/* 標題與特點 */}
+        <div className="text-center text-white mb-2">
+          <h2 className="text-7xl md:text-9xl font-black drop-shadow-lg italic">{data.name}</h2>
+          <div className="px-8 py-2 rounded-full border-4 border-white bg-white/20 inline-block mt-2">
+            <p className="text-2xl md:text-4xl font-bold">{data.trait}</p>
+          </div>
         </div>
 
-        {/* 🔘 巨大的圓形播放鍵 + 漣漪動態 */}
-        <div className="relative mb-6">
+        {/* 🔘 巨大的圓形播放鈕 + 循環漣漪動畫 */}
+        <div className="relative my-4 flex items-center justify-center">
           <AnimatePresence>
             {isPlaying && (
               <motion.div 
                 key="ripple"
                 initial={{ scale: 1, opacity: 0.8 }}
-                animate={{ scale: 2.5, opacity: 0 }}
+                animate={{ scale: 2.8, opacity: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                 className="absolute inset-0 rounded-full bg-white z-0"
               />
             )}
           </AnimatePresence>
           <button 
             onClick={togglePlay}
-            className="relative z-10 w-44 h-44 md:w-60 md:h-60 bg-white rounded-full shadow-2xl flex items-center justify-center active:scale-95 transition-all"
+            className="relative z-10 w-44 h-44 md:w-60 md:h-60 bg-white rounded-full shadow-2xl flex items-center justify-center active:scale-95 transition-transform"
           >
             <span className="text-8xl md:text-[120px] ml-4 text-amber-600">{isPlaying ? '⏸️' : '▶️'}</span>
           </button>
         </div>
 
-        {/* 📝 動作卡片：白底框線，緊湊配置 */}
-        <div className="bg-white p-8 rounded-[50px] shadow-2xl flex flex-col md:flex-row items-center justify-between w-full border-4 border-white/50">
+        {/* 📝 動作指示卡片：白底框線，一頁了然 */}
+        <div className="bg-white/95 p-8 rounded-[60px] shadow-2xl flex flex-col md:flex-row items-center justify-between w-full border-4 border-white/50">
           <div className="text-center md:text-left text-amber-900">
-            <p className="text-2xl font-bold opacity-40 italic mb-1">動作提示：{data.action}</p>
-            <p className="text-[36px] md:text-[48px] font-bold tracking-widest">{data.note}</p>
+            <p className="text-2xl font-bold opacity-40 italic mb-2">動作提示：{data.action}</p>
+            {/* 36級粗體字 */}
+            <p className="text-[36px] md:text-[48px] font-bold tracking-widest leading-tight">{data.note}</p>
           </div>
+          {/* 動物跟著音樂動 */}
           <motion.div 
-            animate={isPlaying ? { y: [0, -20, 0], scale: [1, 1.1, 1] } : {}}
+            animate={isPlaying ? { y: [0, -30, 0], scale: [1, 1.1, 1] } : {}}
             transition={{ repeat: Infinity, duration: 0.6 }}
             className="text-[140px] md:text-[200px] drop-shadow-xl"
           >
