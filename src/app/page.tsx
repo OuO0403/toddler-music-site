@@ -37,12 +37,12 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* 選單按鈕：固定右上角 */}
+      {/* 選單按鈕：精確固定在右上角 */}
       <button 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="fixed top-8 right-8 z-[150] p-6 bg-amber-500 rounded-3xl shadow-2xl border-4 border-white active:scale-90"
       >
-        <div className="space-y-2">
+        <div className="space-y-2 pointer-events-none">
           <div className="w-10 h-2 bg-white rounded-full"></div>
           <div className="w-10 h-2 bg-white rounded-full"></div>
           <div className="w-10 h-2 bg-white rounded-full"></div>
@@ -56,11 +56,10 @@ export default function HomePage() {
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 bg-black/50 z-[110] backdrop-blur-sm"
+              className="fixed inset-0 bg-black/60 z-[110] backdrop-blur-sm"
             />
             <motion.div 
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-[#f0fdf4] z-[120] shadow-2xl p-10 flex flex-col border-l-[12px] border-amber-500"
             >
               <h2 className="text-4xl font-black text-amber-900 mb-8 border-b-4 border-amber-100 pb-2">管理中心</h2>
@@ -70,7 +69,7 @@ export default function HomePage() {
                   <button onClick={() => alert('🛑 停！')} className="w-full py-6 bg-white text-red-600 font-bold text-[36px] rounded-full">停！🛑</button>
                 </section>
                 <div className="bg-green-100 p-6 rounded-3xl text-[24px] font-bold text-green-800 border-2 border-green-200">
-                  <p>💡 先語音口訣，再加入身體動作。</p>
+                  <p>💡 提示：先用語音口訣，再加入身體動作。</p>
                 </div>
               </div>
               <button onClick={() => setIsMenuOpen(false)} className="mt-auto py-6 bg-amber-900 text-white font-bold text-[36px] rounded-2xl">收回選單</button>

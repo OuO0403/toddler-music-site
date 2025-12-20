@@ -1,6 +1,6 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion'; // 確保這裡有 AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 
@@ -22,11 +22,14 @@ export default function AnimalPage() {
 
   if (!data) return null;
 
-  const handlePlay = () => {
+  const togglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = 0; // 重複點擊從頭播放
-      audioRef.current.play();
-      setIsPlaying(true);
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
   };
 
@@ -36,69 +39,81 @@ export default function AnimalPage() {
       initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
       exit={{ borderRadius: '100%' }} 
-      transition={{ duration: 0.5 }}
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-center p-6 z-[200] overflow-hidden"
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-center z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 🏠 返回鍵：精確固定於左上角 */}
-      <Link href="/" className="fixed top-8 left-8 text-[60px] drop-shadow-2xl z-[250] hover:scale-110 active:scale-90 transition-transform">
+      {/* 🏠 返回鍵：精確固定於最左上角 */}
+      <Link href="/" className="fixed top-8 left-8 text-[60px] drop-shadow-2xl z-[250] hover:scale-110 transition-transform">
         🏠
       </Link>
 
-      <div className="w-full max-w-4xl flex flex-col items-center gap-4 text-white">
-        {/* 標題與特點：精簡間距 */}
-        <h2 className="text-7xl md:text-9xl font-black drop-shadow-lg italic leading-none">{data.name}</h2>
-        <p className="text-xl md:text-2xl font-bold bg-white/20 px-8 py-2 rounded-full border-2 border-white/50 mb-2">
-          {data.trait}
-        </p>
+      <div className="w-full max-w-4xl flex flex-col items-center gap-6">
+        {/* 標題與特點：增加間距避免擠壓 */}
+        <div className="text-center text-white space-y-4">
+          <h2 className="text-7xl md:text-9xl font-black drop-shadow-lg italic">{data.name}</h2>
+          <div className="px-10 py-3 rounded-full border-4 border-white inline-block bg-white/20">
+            <p className="text-2xl md:text-4xl font-bold">{data.trait}</p>
+          </div>
+        </div>
 
         {/* 🔘 巨大的圓形播放鍵與漣漪效果 */}
-        <div className="relative mb-6 flex items-center justify-center">
+        <div className="relative my-4">
           <AnimatePresence>
             {isPlaying && (
-              <motion.div 
-                key="ripple"
-                initial={{ scale: 1, opacity: 0.8 }}
-                animate={{ scale: 2.2, opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="absolute inset-0 rounded-full bg-white z-0"
-              />
+              <>
+                <motion.div 
+                  initial={{ scale: 1, opacity: 0.6 }}
+                  animate={{ scale: 2.2, opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="absolute inset-0 rounded-full bg-white z-0"
+                />
+                <motion.div 
+                  initial={{ scale: 1, opacity: 0.4 }}
+                  animate={{ scale: 3, opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  className="absolute inset-0 rounded-full bg-white z-0"
+                />
+              </>
             )}
           </AnimatePresence>
           
           <button 
-            onClick={handlePlay}
-            className="relative z-10 w-40 h-40 md:w-52 md:h-52 bg-white rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+            onClick={togglePlay}
+            className="relative z-10 w-40 h-40 md:w-56 md:h-56 bg-white rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform"
           >
-            {/* 播放圖示 */}
-            <span className="text-7xl md:text-8xl text-amber-600 ml-4">▶️</span>
+            <span className="text-7xl md:text-9xl ml-2">{isPlaying ? '⏸️' : '▶️'}</span>
           </button>
-          
-          <audio 
-            ref={audioRef} 
-            src={`/audio/${animalId}.mp3`} 
-            onEnded={() => setIsPlaying(false)} 
-            onPlay={() => setIsPlaying(true)}
-          />
         </div>
 
-        {/* 📝 動作卡片：一頁了然佈局 */}
-        <div className="bg-white/95 p-6 rounded-[50px] shadow-2xl flex flex-col md:flex-row items-center justify-between w-full border-4 border-white text-amber-900">
-          <div className="text-center md:text-left">
-            <p className="text-2xl font-bold opacity-50 italic mb-1">動作提示：{data.action}</p>
-            {/* 規格確認：36級粗體字 */}
+        {/* 📝 動作卡片：白底框線，內容寬敞 */}
+        <div className="bg-white p-10 rounded-[60px] shadow-2xl flex flex-col md:flex-row items-center justify-between w-full border-8 border-white/50">
+          <div className="text-center md:text-left text-amber-900">
+            <p className="text-3xl font-bold opacity-50 italic mb-2">動作提示：{data.action}</p>
             <p className="text-[36px] font-bold tracking-widest leading-tight">{data.note}</p>
           </div>
+          
           <motion.div 
-            animate={{ scale: [1, 1.1, 1] }} 
-            transition={{ repeat: Infinity, duration: 2 }} 
-            className="text-[120px] md:text-[180px]"
+            animate={isPlaying ? { 
+              scale: [1, 1.2, 1],
+              rotate: [0, 10, -10, 0],
+              y: [0, -20, 0]
+            } : {}} 
+            transition={{ repeat: Infinity, duration: 1 }} 
+            className="text-[160px] md:text-[220px] drop-shadow-xl"
           >
             {data.icon}
           </motion.div>
         </div>
       </div>
+
+      <audio 
+        ref={audioRef} 
+        src={`/audio/${animalId}.mp3`} 
+        loop // 循環播放
+        onEnded={() => setIsPlaying(false)} 
+      />
     </motion.div>
   );
 }
