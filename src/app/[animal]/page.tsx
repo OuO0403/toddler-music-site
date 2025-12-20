@@ -1,16 +1,16 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import AnimalMusicPlayer from '@/components/AnimalMusicPlayer';
 
 const animalData: any = {
-  [cite_start]elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚', action: '用腳大力踏地', trait: '強調第一、三拍重音 [cite: 2, 3]' },
-  [cite_start]rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳', action: '雙手拍大腿', trait: '感受八分音符的輕快感 [cite: 8, 9]' },
-  [cite_start]snake: { name: '小蛇', icon: '🐍', color: '#88D498', note: '嘶 —— 、嘶 ——', action: '雙手掌心互搓', trait: '練習長音與空間感 [cite: 14, 15]' },
-  [cite_start]woodpecker: { name: '啄木鳥', icon: '🐦', color: '#FF6B6B', note: '噠噠噠、噠', action: '手指輕敲另一手心', trait: '訓練指尖靈活度 [cite: 20, 21]' },
-  [cite_start]gorilla: { name: '大猩猩', icon: '🦍', color: '#6D4C41', note: '嗚、哈、嗚嗚、哈', action: '雙手交替拍打胸口', trait: '訓練身體中軸線認知 [cite: 26, 27]' },
-  [cite_start]lion: { name: '獅子', icon: '🦁', color: '#F9A825', note: '吼！吼！吼！', action: '雙手向前抓＋吼叫', trait: '練習爆發力與強音 [cite: 32, 33]' },
+  elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚', action: '用腳大力踏地', trait: '強調第一、三拍重音' },
+  rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳', action: '雙手拍大腿', trait: '感受八分音符的輕快感' },
+  snake: { name: '小蛇', icon: '🐍', color: '#88D498', note: '嘶 —— 、嘶 ——', action: '雙手掌心互搓', trait: '練習長音與空間感' },
+  woodpecker: { name: '啄木鳥', icon: '🐦', color: '#FF6B6B', note: '噠噠噠、噠', action: '手指輕敲另一手心', trait: '訓練指尖靈活度' },
+  gorilla: { name: '大猩猩', icon: '🦍', color: '#6D4C41', note: '嗚、哈、嗚嗚、哈', action: '雙手交替拍打胸口', trait: '訓練身體中軸線認知' },
+  lion: { name: '獅子', icon: '🦁', color: '#F9A825', note: '吼！吼！吼！', action: '雙手向前抓＋吼叫', trait: '練習爆發力與強音' },
 };
 
 export default function AnimalPage() {
@@ -23,11 +23,11 @@ export default function AnimalPage() {
   return (
     <motion.div 
       layoutId={`bg-${animalId}`} 
-      /* 強制過場時保持圓形半徑，直到填滿螢幕 */
-      style={{ backgroundColor: data.color, borderRadius: '9999px' }}
+      initial={{ borderRadius: '9999px' }}
       animate={{ borderRadius: '0px' }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-around p-8 z-50 overflow-y-auto"
+      style={{ backgroundColor: data.color }}
     >
       <Link href="/" className="absolute top-10 left-10 text-6xl drop-shadow-lg hover:scale-110 transition-transform">🏠</Link>
 
