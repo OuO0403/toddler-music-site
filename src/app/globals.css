@@ -2,23 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-grass: #4ade80; /* 飽滿的草地綠色 */
+  --grass-pattern: #22c55e; /* 草苗顏色 */
+}
+
+/* 1. 全螢幕飽滿背景與草苗圖案 */
 body {
   margin: 0 !important;
   padding: 0 !important;
   min-height: 100vh;
   width: 100vw;
-  background-color: #4ade80 !important; /* 飽滿草地綠 */
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q15 30 20 50 M15 50 Q18 35 21 50 M30 50 Q35 25 40 50 M50 50 Q55 35 60 50' fill='none' stroke='%2322c55e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
-  background-size: 150px 150px !important;
+  background-color: var(--bg-grass) !important;
+  /* 使用 SVG 繪製大顆、清晰的小草簇 */
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q15 30 20 50 M15 50 Q18 35 21 50 M30 50 Q35 25 40 50 M50 50 Q55 35 60 50' fill='none' stroke='%2322c55e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-size: 200px 200px !important; /* 確保草苗夠大 */
   overflow-x: hidden;
 }
 
-/* 確保按鍵名稱與口訣絕對是 36px 粗體 */
-.text-zoo-36 {
-  font-size: 36px !important;
-  font-weight: 700 !important;
-  line-height: 1.2 !important;
+/* 2. 規格字體要求：36級粗體字 */
+@layer components {
+  .text-zoo-36 {
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+  }
+  
+  .text-zoo-72 {
+    font-size: 72px !important;
+    font-weight: 900 !important;
+  }
 }
 
-/* 移除所有可能導致置中的容器限制 */
-main, div { max-width: none !important; }
+/* 3. 絕對正圓與按鈕規格：12px 黑邊、深層陰影 */
+.zoo-circle-btn {
+  aspect-ratio: 1 / 1 !important;
+  border: 12px solid #000000 !important;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.45) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px !important;
+  transition: transform 0.2s ease-out;
+}
+
+/* 4. 移除所有阻礙「圓形溢出過場」的容器限制 */
+main, .container, #__next {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 5. 隱藏捲軸，確保一頁了然視覺感 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 6. 灰色漣漪動畫關鍵幀 */
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(128, 128, 128, 0.4); /* 灰色漣漪 */
+  pointer-events: none;
+  animation: ripple-effect 1.5s infinite;
+}
