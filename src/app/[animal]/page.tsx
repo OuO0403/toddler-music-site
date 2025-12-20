@@ -41,11 +41,10 @@ export default function AnimalPage() {
       animate={{ borderRadius: '0px' }}
       exit={{ borderRadius: '100%' }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      /* pt-[20px] 讓整體更靠頂部 */
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[20px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 1. 🏠 返回鍵：移除圓圈底色，直接顯示圖示 */}
+      {/* 1. 返回鍵：無邊框直接顯示圖示 */}
       <Link 
         href="/" 
         className="fixed top-[16px] left-[16px] z-[300] transition-transform hover:scale-110 active:scale-90"
@@ -54,7 +53,7 @@ export default function AnimalPage() {
       </Link>
 
       <div className="w-full max-w-6xl flex flex-col items-center">
-        {/* 標題：mb-[20px] 縮小，讓標題看起來更高 */}
+        {/* 標題上移 */}
         <h2 className="text-[72px] font-black text-white italic mb-[20px] drop-shadow-lg">
           {data.name}
         </h2>
@@ -62,29 +61,30 @@ export default function AnimalPage() {
         {/* 主內容區 */}
         <div className="flex flex-row items-center justify-center gap-[80px] mb-[40px] w-full px-[40px]">
           
-          {/* 2. ▶️ 播放鍵：移除 bg-white 和 zoo-circle-btn，只留透明背景和灰色漣漪 */}
+          {/* 2. 播放鍵：透明背景，無白邊 */}
           <div className="relative flex-shrink-0 flex items-center justify-center w-[200px] h-[200px]">
             <AnimatePresence>
               {isPlaying && (
                 <motion.div 
-                  initial={{ scale: 0.5, opacity: 0.6 }}
-                  animate={{ scale: 1.5, opacity: 0 }}
+                  initial={{ scale: 0.8, opacity: 0.5 }}
+                  animate={{ scale: 2, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
-                  className="absolute inset-0 rounded-full bg-white/30 z-0"
+                  className="absolute inset-0 rounded-full bg-white/20 z-0"
                 />
               )}
             </AnimatePresence>
+            
             <button 
               onClick={togglePlay}
-              className="relative z-10 w-[200px] h-[200px] flex items-center justify-center active:scale-95 transition-all"
+              className="relative z-10 w-full h-full flex items-center justify-center active:scale-95 transition-all bg-transparent border-none outline-none"
             >
-              <span className="text-[140px] text-white select-none">
+              <span className="text-[140px] text-white drop-shadow-md select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
             </button>
           </div>
 
-          {/* 3. 🐘 動物圖示：移除白色圓圈，直接顯示 Emoji */}
+          {/* 3. 動物圖示：透明背景直接顯示 */}
           <motion.div 
             animate={isPlaying ? { 
               y: [0, -30, 0],
