@@ -3,27 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --grass-color: #dcfce7;
-  --bg-color: #f0fdf4;
+  --bg-grass: #f0fdf4; /* 飽滿的草原淺綠色 */
 }
 
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg-color);
+  background-color: var(--bg-grass);
   min-height: 100vh;
-  overflow-x: hidden;
   /* 繪製隨機散佈的小草苗 */
   background-image: 
-    radial-gradient(circle at 10% 20%, #86efac 1px, transparent 1px),
-    radial-gradient(circle at 30% 50%, #86efac 1.5px, transparent 1.5px),
-    radial-gradient(circle at 70% 10%, #86efac 1px, transparent 1px),
-    radial-gradient(circle at 90% 80%, #86efac 1.5px, transparent 1.5px),
-    radial-gradient(circle at 50% 90%, #86efac 1px, transparent 1px);
-  background-size: 200px 200px;
+    radial-gradient(circle at 15% 25%, #86efac 1.5px, transparent 1.5px),
+    radial-gradient(circle at 45% 65%, #86efac 2px, transparent 2px),
+    radial-gradient(circle at 85% 35%, #86efac 1.5px, transparent 1.5px),
+    radial-gradient(circle at 25% 85%, #86efac 2px, transparent 2px),
+    radial-gradient(circle at 65% 15%, #86efac 1.5px, transparent 1.5px);
+  background-size: 300px 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* 確保全螢幕無白框 */
-* {
-  box-sizing: border-box;
+/* 確保過場動畫時不會出現捲軸抖動 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

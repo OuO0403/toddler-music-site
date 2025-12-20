@@ -22,33 +22,37 @@ export default function AnimalPage() {
 
   return (
     <motion.div 
+      /* 核心：使用與首頁相同的 layoutId 達成無縫縮放 */
       layoutId={`circle-bg-${animalId}`}
-      initial={{ borderRadius: '9999px' }}
+      initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
-      exit={{ borderRadius: '9999px' }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
+      exit={{ borderRadius: '100%' }}
+      transition={{ type: "spring", stiffness: 100, damping: 18 }}
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-around p-10 z-[200] overflow-y-auto"
       style={{ backgroundColor: data.color }}
     >
-      <Link href="/" className="absolute top-12 left-12 text-7xl drop-shadow-2xl hover:scale-110">🏠</Link>
+      {/* 返回鍵：固定左上角 */}
+      <Link href="/" className="absolute top-12 left-12 text-7xl drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform">🏠</Link>
 
       <div className="text-center text-white">
         <h2 className="text-8xl font-black mb-4 drop-shadow-2xl tracking-tighter">{data.name}</h2>
         <p className="text-3xl font-bold bg-black/20 px-10 py-4 rounded-full inline-block border-2 border-white/30">{data.trait}</p>
       </div>
 
-      <div className="w-full max-w-5xl bg-white/10 p-8 rounded-[60px] border-4 border-white/20 backdrop-blur-md">
+      {/* 音樂播放器區塊 */}
+      <div className="w-full max-w-4xl bg-white/10 p-8 rounded-[55px] border-4 border-white/20 backdrop-blur-sm">
         <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/30" />
       </div>
 
-      <div className="bg-white/95 p-12 rounded-[80px] shadow-2xl flex flex-col md:flex-row items-center gap-16 w-full max-w-5xl">
+      {/* 動作引導區塊 [cite: 1-35] */}
+      <div className="bg-white/95 p-12 rounded-[75px] shadow-2xl flex flex-col md:flex-row items-center gap-12 w-full max-w-5xl border-4 border-white/50">
         <div className="flex-grow text-center md:text-left text-green-900">
-          <p className="text-3xl font-bold opacity-60 mb-2">動作提示：{data.action} [cite: 3, 9, 15, 21, 27, 33]</p>
-          <p className="text-8xl font-black tracking-widest">{data.note} [cite: 4, 10, 16, 22, 28, 34]</p>
+          <p className="text-3xl font-bold opacity-60 mb-2">動作提示：{data.action}</p>
+          <p className="text-8xl font-black tracking-widest leading-none">{data.note}</p>
         </div>
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }} 
-          transition={{ repeat: Infinity, duration: 2 }} 
+          animate={{ scale: [1, 1.25, 1], rotate: [0, 5, -5, 0] }} 
+          transition={{ repeat: Infinity, duration: 2.5 }} 
           className="text-[180px] drop-shadow-2xl"
         >
           {data.icon}
