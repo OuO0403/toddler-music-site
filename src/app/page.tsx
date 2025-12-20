@@ -37,7 +37,7 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* 選單按鈕：精確固定在右上角 */}
+      {/* 修正 1：選單按鈕固定在視窗右上角，不再亂跑 */}
       <button 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="fixed top-8 right-8 z-[150] p-6 bg-amber-500 rounded-3xl shadow-2xl border-4 border-white active:scale-90"
@@ -49,7 +49,7 @@ export default function HomePage() {
         </div>
       </button>
 
-      {/* 1/3 選單與暗色遮罩 */}
+      {/* 修正 2：1/3 右側選單與淺綠色底色 */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
@@ -62,14 +62,14 @@ export default function HomePage() {
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-[#f0fdf4] z-[120] shadow-2xl p-10 flex flex-col border-l-[12px] border-amber-500"
             >
-              <h2 className="text-4xl font-black text-amber-900 mb-8 border-b-4 border-amber-100 pb-2">管理中心</h2>
+              <h2 className="text-4xl font-black text-amber-900 mb-8 border-b-4 border-amber-100 pb-2 italic">管理中心</h2>
               <div className="space-y-8 flex-grow">
                 <section className="bg-red-500 p-8 rounded-[40px] shadow-lg text-center">
                   <h3 className="text-2xl font-black text-white mb-4">🚦 紅綠燈遊戲</h3>
                   <button onClick={() => alert('🛑 停！')} className="w-full py-6 bg-white text-red-600 font-bold text-[36px] rounded-full">停！🛑</button>
                 </section>
                 <div className="bg-green-100 p-6 rounded-3xl text-[24px] font-bold text-green-800 border-2 border-green-200">
-                  <p>💡 提示：先用語音口訣，再加入身體動作。</p>
+                  <p>💡 提示：先語音口訣，再加入身體動作。</p>
                 </div>
               </div>
               <button onClick={() => setIsMenuOpen(false)} className="mt-auto py-6 bg-amber-900 text-white font-bold text-[36px] rounded-2xl">收回選單</button>
