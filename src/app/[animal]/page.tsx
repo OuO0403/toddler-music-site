@@ -1,5 +1,5 @@
 'use client';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import AnimalMusicPlayer from '@/components/AnimalMusicPlayer';
@@ -22,35 +22,37 @@ export default function AnimalPage() {
 
   return (
     <motion.div 
-      layoutId={`bg-${animalId}`} 
+      /* 關鍵：使用與首頁完全相同的 layoutId，且初始強制為圓形 */
+      layoutId={`circle-bg-${animalId}`}
       initial={{ borderRadius: '9999px' }}
       animate={{ borderRadius: '0px' }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-around p-8 z-50 overflow-y-auto"
+      exit={{ borderRadius: '9999px' }}
+      transition={{ type: "spring", stiffness: 200, damping: 25 }}
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-around p-10 z-[200] overflow-y-auto"
       style={{ backgroundColor: data.color }}
     >
-      <Link href="/" className="absolute top-10 left-10 text-6xl drop-shadow-lg hover:scale-110 transition-transform">🏠</Link>
+      <Link href="/" className="absolute top-12 left-12 text-7xl drop-shadow-2xl hover:scale-110">🏠</Link>
 
-      <div className="text-center text-white space-y-4">
-        <h2 className="text-7xl font-black drop-shadow-xl">{data.name}</h2>
-        <div className="bg-white/20 backdrop-blur-md px-8 py-3 rounded-full text-2xl font-bold border-2 border-white/50 inline-block">
+      <div className="text-center text-white">
+        <h2 className="text-8xl font-black mb-4 drop-shadow-xl">{data.name}</h2>
+        <p className="text-3xl font-bold bg-black/20 px-10 py-4 rounded-full inline-block border-2 border-white/30">
           {data.trait}
-        </div>
+        </p>
       </div>
 
-      <div className="w-full max-w-4xl bg-white/10 p-6 rounded-[50px] border-4 border-white/20">
-        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/20" />
+      <div className="w-full max-w-5xl bg-white/10 p-8 rounded-[60px] border-4 border-white/20 backdrop-blur-md">
+        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/30" />
       </div>
 
-      <div className="bg-white/95 p-10 rounded-[60px] shadow-2xl flex flex-col md:flex-row items-center gap-12 w-full max-w-4xl">
+      <div className="bg-white/95 p-12 rounded-[80px] shadow-2xl flex flex-col md:flex-row items-center gap-16 w-full max-w-5xl">
         <div className="flex-grow text-center md:text-left text-amber-900">
-          <p className="text-3xl font-bold opacity-60 mb-2">動作提示：{data.action}</p>
-          <p className="text-7xl font-black tracking-wider">{data.note}</p>
+          <p className="text-3xl font-bold opacity-50 mb-4">動作提示：{data.action}</p>
+          <p className="text-8xl font-black tracking-widest leading-tight">{data.note}</p>
         </div>
         <motion.div 
-          animate={{ scale: [1, 1.2, 1] }} 
-          transition={{ repeat: Infinity, duration: 2 }} 
-          className="text-[140px]"
+          animate={{ y: [0, -30, 0], scale: [1, 1.1, 1] }} 
+          transition={{ repeat: Infinity, duration: 1.5 }} 
+          className="text-[180px] drop-shadow-2xl"
         >
           {data.icon}
         </motion.div>
