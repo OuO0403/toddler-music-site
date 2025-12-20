@@ -32,13 +32,12 @@ export default function HomePage() {
             >
               <span className="text-[120px] md:text-[180px] select-none">{a.icon}</span>
             </motion.button>
-            {/* 修正：字體大小 36px (text-[36px]) 且粗體 */}
             <span className="mt-8 text-[36px] font-bold text-white drop-shadow-lg">{a.name}</span>
           </div>
         ))}
       </div>
 
-      {/* 選單按鈕：固定位置 */}
+      {/* 選單按鈕：右上角固定 */}
       <button 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="fixed top-8 right-8 z-[150] p-6 bg-amber-500 rounded-3xl shadow-2xl border-4 border-white active:scale-90"
@@ -50,7 +49,7 @@ export default function HomePage() {
         </div>
       </button>
 
-      {/* 1/3 選單與遮罩 */}
+      {/* 1/3 選單與淺綠色底 */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
@@ -62,16 +61,16 @@ export default function HomePage() {
             <motion.div 
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-white z-[120] shadow-2xl p-10 flex flex-col border-l-[12px] border-amber-500"
+              className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-[#f0fdf4] z-[120] shadow-2xl p-10 flex flex-col border-l-[12px] border-amber-500"
             >
               <h2 className="text-4xl font-black text-amber-900 mb-8 border-b-4 border-amber-100 pb-2">管理中心</h2>
               <div className="space-y-8 flex-grow">
                 <section className="bg-red-500 p-8 rounded-[40px] shadow-lg text-center">
                   <h3 className="text-2xl font-black text-white mb-4">🚦 紅綠燈遊戲</h3>
-                  <button onClick={() => alert('🛑 停！')} className="w-full py-6 bg-white text-red-600 font-bold text-[36px] rounded-full">停！🛑</button>
+                  <button onClick={() => alert('🛑 停！')} className="w-full py-6 bg-white text-red-600 font-bold text-[36px] rounded-full shadow-inner">停！🛑</button>
                 </section>
-                <div className="bg-green-50 p-6 rounded-3xl text-[24px] font-bold text-green-800">
-                  <p>💡 先語音口訣，再加入身體動作 [cite: 37]。</p>
+                <div className="bg-green-100 p-6 rounded-3xl text-[24px] font-bold text-green-800 border-2 border-green-200">
+                  <p>💡 先語音口訣，再加入身體動作。</p>
                 </div>
               </div>
               <button onClick={() => setIsMenuOpen(false)} className="mt-auto py-6 bg-amber-900 text-white font-bold text-[36px] rounded-2xl">關閉選單</button>
