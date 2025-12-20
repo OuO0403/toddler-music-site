@@ -22,36 +22,39 @@ export default function AnimalPage() {
 
   return (
     <motion.div 
+      /* 關鍵：使用 layoutId 配合圓角動畫 */
       layoutId={`circle-bg-${animalId}`}
       initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
-      exit={{ borderRadius: '100%' }} // 關鍵：確保返回時縮回圓形
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start py-12 px-8 z-[200] overflow-y-auto"
+      exit={{ borderRadius: '100%' }} 
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start py-8 px-6 z-[200] overflow-y-auto no-scrollbar"
       style={{ backgroundColor: data.color }}
     >
-      {/* 返回鍵：絕對定位於左上角 */}
-      <Link href="/" className="absolute top-8 left-8 text-6xl md:text-8xl drop-shadow-xl hover:scale-110 z-[210]">🏠</Link>
+      {/* 修正：返回鍵絕對定位於左上角 */}
+      <Link href="/" className="absolute top-8 left-8 text-[60px] drop-shadow-xl z-[210] hover:scale-110">🏠</Link>
 
-      {/* 標題與特點：縮小垂直間距 */}
-      <div className="text-center text-white mb-8 mt-16">
-        <h2 className="text-6xl md:text-9xl font-black drop-shadow-lg italic">{data.name}</h2>
-        <p className="text-2xl md:text-4xl font-bold bg-white/20 px-8 py-2 rounded-full inline-block border-2 border-white/50">{data.trait}</p>
+      {/* 縮小容器間距達成一頁了然 */}
+      <div className="text-center text-white mb-6 mt-12">
+        <h2 className="text-6xl md:text-8xl font-black drop-shadow-lg italic">{data.name}</h2>
+        <p className="text-xl md:text-2xl font-bold bg-white/20 px-6 py-1 rounded-full inline-block border-2 border-white/50">{data.trait}</p>
       </div>
 
-      {/* 音樂播放器：精簡容器 */}
-      <div className="w-full max-w-5xl bg-white/10 p-6 rounded-[50px] border-4 border-white/20 backdrop-blur-md mb-8">
-        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/30" />
+      {/* 播放器容器縮小 */}
+      <div className="w-full max-w-4xl bg-white/10 p-4 rounded-[40px] border-2 border-white/20 backdrop-blur-md mb-6">
+        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/20" />
       </div>
 
-      {/* 動作指示：一頁了然，減少冗餘框佔位 */}
-      <div className="bg-white p-8 rounded-[60px] shadow-2xl flex flex-col md:flex-row items-center gap-10 w-full max-w-5xl">
+      {/* 內容拉近：動作指示區塊 */}
+      <div className="bg-white p-6 rounded-[50px] shadow-2xl flex flex-col md:flex-row items-center gap-8 w-full max-w-4xl">
         <div className="flex-grow text-center md:text-left text-amber-900">
-          <p className="text-3xl font-bold opacity-50 mb-2 italic">動作：{data.action}</p>
-          <p className="text-6xl md:text-8xl font-black tracking-widest">{data.note}</p>
+          <p className="text-2xl font-bold opacity-50 italic">動作：{data.action} [cite: 3, 9, 15, 21, 27, 33]</p>
+          {/* 修正：字體大小 36px 且粗體 */}
+          <p className="text-[36px] font-bold tracking-widest leading-tight">{data.note} </p>
         </div>
         <motion.div 
-          animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} 
-          className="text-[150px] md:text-[220px]"
+          animate={{ scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 2 }} 
+          className="text-[120px] md:text-[180px]"
         >
           {data.icon}
         </motion.div>
