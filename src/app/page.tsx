@@ -16,83 +16,69 @@ export default function HomePage() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const triggerVibrate = (ms = 80) => {
-    if (typeof window !== 'undefined' && window.navigator.vibrate) {
-      window.navigator.vibrate(ms);
-    }
-  };
-
   return (
-    <div className="w-full min-h-screen flex flex-col items-center py-20 px-4 relative">
-      <h1 className="text-6xl md:text-9xl font-black text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] mb-20 tracking-tighter italic">
-        音樂動物園 🎵
-      </h1>
+    <div className="relative w-full min-h-screen flex flex-col items-center py-20 px-4">
+      <h1 className="text-6xl md:text-9xl font-black text-white drop-shadow-2xl mb-20 italic">音樂動物園 🎵</h1>
 
-      {/* 3x2 巨大網格 */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 md:gap-x-20 gap-y-20 md:gap-y-32 w-full max-w-7xl justify-items-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-20 w-full max-w-7xl justify-items-center">
         {animals.map((a) => (
           <div key={a.id} className="flex flex-col items-center w-full">
             <motion.button
               layoutId={`circle-bg-${a.id}`} 
-              onClick={() => { triggerVibrate(); router.push(`/${a.id}`); }}
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-              /* 強制巨大化：w-full 搭配更大的 max-w */
-              className="relative w-full aspect-square max-w-[320px] rounded-full shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] flex items-center justify-center border-[12px] border-white/80 overflow-hidden z-10"
+              onClick={() => router.push(`/${a.id}`)}
+              whileHover={{ scale: 1.1 }}
+              className="relative w-full aspect-square max-w-[300px] rounded-full shadow-2xl flex items-center justify-center border-[12px] border-white/80 overflow-hidden"
               style={{ backgroundColor: a.color }}
             >
-              <span className="text-[120px] md:text-[200px] select-none pointer-events-none drop-shadow-lg">{a.icon}</span>
+              <span className="text-[120px] md:text-[180px] select-none">{a.icon}</span>
             </motion.button>
-            <span className="mt-10 text-4xl md:text-7xl font-black text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
-              {a.name}
-            </span>
+            <span className="mt-8 text-4xl md:text-6xl font-black text-white drop-shadow-lg">{a.name}</span>
           </div>
         ))}
       </div>
 
-      {/* 右上角選單鍵 */}
+      {/* 選單按鈕：固定在右上方 */}
       <button 
-        onClick={() => { setIsMenuOpen(true); triggerVibrate(); }}
-        className="fixed top-10 right-10 z-[100] p-8 bg-amber-500 rounded-[40px] shadow-2xl border-8 border-white hover:scale-110 transition-transform"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className="fixed top-8 right-8 z-[150] p-6 bg-amber-500 rounded-3xl shadow-2xl border-4 border-white active:scale-90 transition-transform"
       >
-        <div className="space-y-3">
-          <div className="w-16 h-3 bg-white rounded-full"></div>
-          <div className="w-16 h-3 bg-white rounded-full"></div>
-          <div className="w-16 h-3 bg-white rounded-full"></div>
+        <div className="space-y-2">
+          <div className="w-10 h-2 bg-white rounded-full"></div>
+          <div className="w-10 h-2 bg-white rounded-full"></div>
+          <div className="w-10 h-2 bg-white rounded-full"></div>
         </div>
       </button>
 
-      {/* 教學與紅綠燈遊戲 */}
+      {/* 右側 1/3 選單 */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
-            initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-            className="fixed top-0 right-0 h-full w-full md:w-[500px] bg-white z-[110] shadow-2xl p-12 flex flex-col border-l-[15px] border-amber-500"
-          >
-            <h2 className="text-5xl font-black text-amber-900 mb-10 pb-6 border-b-8 border-amber-100">管理中心</h2>
-            <div className="space-y-12 flex-grow">
-              <section className="bg-red-500 p-10 rounded-[60px] shadow-xl">
-                <h3 className="text-4xl font-black text-white mb-6 text-center tracking-widest italic">🚦 紅綠燈遊戲 [cite: 39]</h3>
-                <button 
-                  onClick={() => { triggerVibrate(300); alert('🛑 停！不准動！'); }}
-                  className="w-full py-10 bg-white text-red-600 font-black text-6xl rounded-full shadow-2xl active:scale-95 border-8 border-red-200"
-                >
-                  停！🛑
-                </button>
-              </section>
-              <section className="bg-green-100 p-8 rounded-[50px] text-2xl font-bold text-green-900 border-4 border-green-300">
-                <h3 className="text-3xl font-black mb-4">💡 教學提示 [cite: 36]</h3>
-                <ul className="list-disc pl-8 space-y-4">
-                  <li>先用語音口訣，再加入身體動作 [cite: 37]。</li>
-                  <li>配合動物情緒演戲，增加帶入感 [cite: 38]。</li>
-                </ul>
-              </section>
-            </div>
-            <button onClick={() => setIsMenuOpen(false)} className="mt-8 py-8 bg-amber-900 text-white font-black text-4xl rounded-3xl">返回</button>
-          </motion.div>
+          <>
+            {/* 點擊遮罩，按下可縮回選單 */}
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 bg-black/40 z-[110] backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-white z-[120] shadow-2xl p-10 flex flex-col border-l-[12px] border-amber-500"
+            >
+              <h2 className="text-4xl font-black text-amber-900 mb-8 border-b-4 border-amber-100 pb-2">管理中心</h2>
+              <div className="space-y-8 flex-grow">
+                <section className="bg-red-500 p-8 rounded-[40px] shadow-lg">
+                  <h3 className="text-2xl font-black text-white mb-4 text-center">🚦 紅綠燈遊戲</h3>
+                  <button onClick={() => alert('🛑 停！')} className="w-full py-6 bg-white text-red-600 font-black text-4xl rounded-full">停！🛑</button>
+                </section>
+                <section className="bg-green-50 p-6 rounded-3xl text-xl font-bold text-green-800">
+                  <p>💡 先語音口訣，再加入身體動作。</p>
+                </section>
+              </div>
+              <button onClick={() => setIsMenuOpen(false)} className="mt-auto py-6 bg-amber-900 text-white font-black text-2xl rounded-2xl">關閉選單</button>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-      <div className="h-60 w-full" />
     </div>
   );
 }

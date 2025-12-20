@@ -5,12 +5,12 @@ import Link from 'next/link';
 import AnimalMusicPlayer from '@/components/AnimalMusicPlayer';
 
 const animalData: any = {
-  elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚 [cite: 4]', action: '用腳大力踏地 [cite: 3]', trait: '強調第一、三拍重音 [cite: 2]' },
-  rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳 [cite: 10]', action: '雙手拍大腿 [cite: 9]', trait: '感受八分音符輕快感 [cite: 8]' },
-  snake: { name: '小蛇', icon: '🐍', color: '#88D498', note: '嘶 —— 、嘶 —— [cite: 16]', action: '雙手掌心互搓 [cite: 15]', trait: '練習長音與空間感 [cite: 14]' },
-  woodpecker: { name: '啄木鳥', icon: '🐦', color: '#FF6B6B', note: '噠噠噠、噠 [cite: 22]', action: '指尖輕敲手心 [cite: 21]', trait: '訓練指尖靈活性 [cite: 20]' },
-  gorilla: { name: '大猩猩', icon: '🦍', color: '#6D4C41', note: '嗚、哈、嗚嗚、哈 [cite: 28]', action: '雙手交替拍打胸口 [cite: 27]', trait: '訓練中軸線認知 [cite: 26]' },
-  lion: { name: '獅子', icon: '🦁', color: '#F9A825', note: '吼！ [cite: 34]', action: '雙手向前抓＋吼叫 [cite: 33]', trait: '練習爆發與靜止 [cite: 32]' },
+  elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚', action: '用腳大力踏地', trait: '強調第一、三拍重音' },
+  rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳', action: '雙手拍大腿', trait: '感受八分音符輕快感' },
+  snake: { name: '小蛇', icon: '🐍', color: '#88D498', note: '嘶 —— 、嘶 ——', action: '雙手掌心互搓', trait: '練習長音與空間感' },
+  woodpecker: { name: '啄木鳥', icon: '🐦', color: '#FF6B6B', note: '噠噠噠、噠', action: '指尖輕敲手心', trait: '訓練指尖靈活性' },
+  gorilla: { name: '大猩猩', icon: '🦍', color: '#6D4C41', note: '嗚、哈、嗚嗚、哈', action: '雙手交替拍打胸口', trait: '訓練中軸線認知' },
+  lion: { name: '獅子', icon: '🦁', color: '#F9A825', note: '吼！', action: '雙手向前抓＋吼叫', trait: '練習爆發與靜止' },
 };
 
 export default function AnimalPage() {
@@ -25,31 +25,33 @@ export default function AnimalPage() {
       layoutId={`circle-bg-${animalId}`}
       initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
-      exit={{ borderRadius: '100%' }}
-      transition={{ type: "spring", stiffness: 90, damping: 15 }}
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-around p-10 z-[200] overflow-y-auto"
+      exit={{ borderRadius: '100%' }} // 關鍵：確保返回時縮回圓形
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start py-12 px-8 z-[200] overflow-y-auto"
       style={{ backgroundColor: data.color }}
     >
-      <Link href="/" className="absolute top-16 left-16 text-[100px] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform">🏠</Link>
+      {/* 返回鍵：絕對定位於左上角 */}
+      <Link href="/" className="absolute top-8 left-8 text-6xl md:text-8xl drop-shadow-xl hover:scale-110 z-[210]">🏠</Link>
 
-      <div className="text-center text-white">
-        <h2 className="text-[120px] font-black mb-6 drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)] tracking-tighter italic">{data.name}</h2>
-        <p className="text-5xl font-bold bg-white/20 px-14 py-6 rounded-full inline-block border-4 border-white/50">{data.trait}</p>
+      {/* 標題與特點：縮小垂直間距 */}
+      <div className="text-center text-white mb-8 mt-16">
+        <h2 className="text-6xl md:text-9xl font-black drop-shadow-lg italic">{data.name}</h2>
+        <p className="text-2xl md:text-4xl font-bold bg-white/20 px-8 py-2 rounded-full inline-block border-2 border-white/50">{data.trait}</p>
       </div>
 
-      <div className="w-full max-w-6xl bg-white/10 p-12 rounded-[100px] border-8 border-white/20 backdrop-blur-xl">
-        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/40" />
+      {/* 音樂播放器：精簡容器 */}
+      <div className="w-full max-w-5xl bg-white/10 p-6 rounded-[50px] border-4 border-white/20 backdrop-blur-md mb-8">
+        <AnimalMusicPlayer animalName={data.name} audioFile={`/audio/${animalId}.mp3`} animalColor="bg-black/30" />
       </div>
 
-      <div className="bg-white p-16 rounded-[100px] shadow-[0_50px_100px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center gap-20 w-full max-w-7xl border-8 border-amber-200">
+      {/* 動作指示：一頁了然，減少冗餘框佔位 */}
+      <div className="bg-white p-8 rounded-[60px] shadow-2xl flex flex-col md:flex-row items-center gap-10 w-full max-w-5xl">
         <div className="flex-grow text-center md:text-left text-amber-900">
-          <p className="text-5xl font-bold opacity-40 mb-6 italic">動作提示：{data.action}</p>
-          <p className="text-[110px] font-black tracking-widest leading-none drop-shadow-md">{data.note}</p>
+          <p className="text-3xl font-bold opacity-50 mb-2 italic">動作：{data.action}</p>
+          <p className="text-6xl md:text-8xl font-black tracking-widest">{data.note}</p>
         </div>
         <motion.div 
-          animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }} 
-          transition={{ repeat: Infinity, duration: 1.5 }} 
-          className="text-[250px] drop-shadow-2xl"
+          animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} 
+          className="text-[150px] md:text-[220px]"
         >
           {data.icon}
         </motion.div>
