@@ -44,30 +44,32 @@ export default function AnimalPage() {
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[20px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 🏠 返回鍵：精確固定左上角 12px */}
+      {/* 1. 🏠 返回鍵：改為 140px 圓圈，固定左上角 12px */}
       <Link 
         href="/" 
-        className="fixed top-[12px] left-[12px] text-[80px] z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
+        className="fixed top-[12px] left-[12px] z-[300] transition-transform hover:scale-110 active:scale-90"
       >
-        🏠
+        <div className="zoo-circle-btn w-[140px] h-[140px] bg-white">
+          <span className="text-[80px] select-none">🏠</span>
+        </div>
       </Link>
 
       <div className="w-full max-w-6xl flex flex-col items-center">
-        {/* 動物名稱：72px 粗體，縮小 mb 到 20px 騰出空間 */}
+        {/* 動物名稱：72px，間距縮小 */}
         <h2 className="text-[72px] font-black text-white italic mb-[20px] drop-shadow-lg">
           {data.name}
         </h2>
 
-        {/* 主內容區：200px 等大佈局 */}
+        {/* 主內容區：橫向排列兩個 140px 圓圈 */}
         <div className="flex flex-row items-center justify-center gap-[40px] mb-[30px] w-full px-[40px]">
           
-          {/* 左側：播放鍵 */}
+          {/* 2. ▶️ 播放鍵：統一為 140px */}
           <div className="relative flex-shrink-0">
             <AnimatePresence>
               {isPlaying && (
                 <motion.div 
                   initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 2.3, opacity: 0 }}
+                  animate={{ scale: 2.2, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                   className="absolute inset-0 rounded-full bg-gray-600/40 z-0"
                 />
@@ -75,30 +77,30 @@ export default function AnimalPage() {
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-[200px] h-[200px] bg-white active:scale-95 transition-all"
+              className="zoo-circle-btn relative z-10 w-[140px] h-[140px] bg-white active:scale-95 transition-all"
             >
-              <span className="text-[100px] text-black ml-[10px] select-none">
+              <span className="text-[70px] text-black ml-[8px] select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
             </button>
           </div>
 
-          {/* 右側：動物圖示 */}
+          {/* 3. 🐘 動物圖示：統一為 140px 容器 */}
           <motion.div 
             animate={isPlaying ? { 
-              y: [0, -20, 0],
-              rotate: [0, 5, -5, 0],
+              y: [0, -15, 0],
+              rotate: [0, 3, -3, 0],
               scale: [1, 1.05, 1]
             } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="w-[200px] h-[200px] flex items-center justify-center text-[160px] drop-shadow-2xl select-none"
+            className="zoo-circle-btn w-[140px] h-[140px] bg-white flex items-center justify-center text-[90px] drop-shadow-2xl select-none"
           >
             {data.icon}
           </motion.div>
         </div>
 
-        {/* 底部文字：20px 置中，無框線 */}
-        <div className="text-center text-white space-y-2 px-6 max-w-2xl">
+        {/* 底部文字：20px 置中 */}
+        <div className="text-center text-white space-y-1 px-6 max-w-2xl">
           <p className="text-[20px] font-medium opacity-90 leading-tight">
             動作提示：{data.action}
           </p>
