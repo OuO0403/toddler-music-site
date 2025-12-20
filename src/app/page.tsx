@@ -15,30 +15,36 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center p-4">
-      {/* 標題：使用更粗的字體 */}
-      <h1 className="text-6xl font-black text-amber-900 mb-16 drop-shadow-xl tracking-widest">
+    <div className="w-full h-screen flex flex-col items-center justify-center p-6 sm:p-10">
+      {/* 標題 */}
+      <h1 className="text-4xl sm:text-6xl font-black text-amber-900 mb-8 sm:mb-12 drop-shadow-xl tracking-widest text-center">
         音樂動物園 🎵
       </h1>
 
-      {/* 2x3 巨大圓形網格 */}
-      <div className="grid grid-cols-3 gap-x-20 gap-y-16">
+      {/* 響應式網格容器：根據裝置寬度自動變換排列順序 */}
+      <div className="grid 
+        grid-cols-1        /* 手機：1x6 */
+        sm:grid-cols-2     /* 平板：2x3 */
+        md:grid-cols-3     /* 小筆電：3x2 */
+        lg:grid-cols-6     /* 大螢幕：6x1 */
+        gap-6 sm:gap-8 lg:gap-10 
+        w-full max-w-7xl max-h-[70vh] items-center justify-items-center">
+        
         {animals.map((a) => (
-          <div key={a.id} className="flex flex-col items-center">
+          <div key={a.id} className="flex flex-col items-center w-full max-w-[180px] sm:max-w-[220px]">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => router.push(`/${a.id}`)}
-              /* 關鍵修正：w-64 h-64 確保足夠大，rounded-full 確保正圓，overflow-hidden 確保圖示不超出 */
-              className="relative w-56 h-56 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center border-none outline-none overflow-hidden"
+              /* aspect-square 確保寬高相等，rounded-full 確保正圓 */
+              className="relative w-full aspect-square rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.25)] flex items-center justify-center border-none outline-none overflow-hidden"
               style={{ backgroundColor: a.color }}
             >
-              {/* 圖示放大到接近圓形的大小 */}
-              <span className="text-[140px] leading-none select-none">
+              {/* 圖示大小隨容器自動縮放 */}
+              <span className="text-[60px] sm:text-[80px] md:text-[100px] leading-none select-none">
                 {a.icon}
               </span>
               
-              {/* 動畫過場層 */}
               <motion.div
                 layoutId={`circle-${a.id}`}
                 className="absolute inset-0 rounded-full z-[-1]"
@@ -46,19 +52,19 @@ export default function HomePage() {
               />
             </motion.button>
 
-            {/* 動物名稱：粗體大字 */}
-            <span className="mt-8 text-4xl font-black text-amber-900 drop-shadow-sm">
+            {/* 動物名稱：粗體 */}
+            <span className="mt-3 sm:mt-5 text-xl sm:text-2xl font-black text-amber-900 drop-shadow-sm whitespace-nowrap">
               {a.name}
             </span>
           </div>
         ))}
       </div>
 
-      {/* 右上角選單鍵：改為更可愛的設計 */}
-      <button className="absolute top-12 right-12 flex flex-col gap-2.5 p-6 bg-white/30 hover:bg-white/50 rounded-[30px] transition-all shadow-lg backdrop-blur-md">
-        <div className="w-12 h-2 bg-amber-900 rounded-full"></div>
-        <div className="w-12 h-2 bg-amber-900 rounded-full"></div>
-        <div className="w-12 h-2 bg-amber-900 rounded-full"></div>
+      {/* 右上角選單鍵 */}
+      <button className="absolute top-6 right-6 sm:top-10 sm:right-10 flex flex-col gap-1.5 sm:gap-2 p-4 sm:p-5 bg-white/30 hover:bg-white/50 rounded-2xl sm:rounded-3xl transition-all shadow-lg backdrop-blur-md">
+        <div className="w-8 h-1.5 sm:w-10 sm:h-2 bg-amber-900 rounded-full"></div>
+        <div className="w-8 h-1.5 sm:w-10 sm:h-2 bg-amber-900 rounded-full"></div>
+        <div className="w-8 h-1.5 sm:w-10 sm:h-2 bg-amber-900 rounded-full"></div>
       </button>
     </div>
   );
