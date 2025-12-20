@@ -15,29 +15,28 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center p-6 overflow-hidden">
-      {/* 標題 */}
-      <h1 className="text-4xl md:text-6xl font-black text-amber-900 mb-8 md:mb-12 drop-shadow-xl tracking-widest text-center">
+    /* h-full 改為 min-h-screen 並允許 overflow-y-auto 產生捲軸 */
+    <div className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-sky-100 to-green-100 py-12 px-6 overflow-y-auto">
+      
+      <h1 className="text-5xl md:text-7xl font-black text-amber-900 mb-16 drop-shadow-xl tracking-widest text-center">
         音樂動物園 🎵
       </h1>
 
-      {/* 關鍵：響應式網格 (手機 1欄, 平板 2或3欄, 大螢幕 6欄) */}
-      <div className="grid 
-        grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 
-        gap-6 md:gap-10 
-        w-full max-w-7xl max-h-[75vh] items-center justify-items-center">
+      {/* 設定為固定 2 列 (手機) 或 3 列 (電腦)，確保圓圈能撐到最大 */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-20 w-full max-w-5xl justify-items-center">
         
         {animals.map((a) => (
-          <div key={a.id} className="flex flex-col items-center w-full max-w-[150px] md:max-w-[200px]">
+          <div key={a.id} className="flex flex-col items-center w-full">
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => router.push(`/${a.id}`)}
-              /* 使用 aspect-square 確保寬高 1:1，rounded-full 確保正圓 */
-              className="relative w-full aspect-square rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.25)] flex items-center justify-center border-none outline-none overflow-hidden"
+              /* 關鍵：使用 w-full 配合 aspect-square 撐大正圓 */
+              className="relative w-full max-w-[280px] aspect-square rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center justify-center border-none outline-none overflow-hidden"
               style={{ backgroundColor: a.color }}
             >
-              <span className="text-[60px] md:text-[90px] leading-none select-none">
+              {/* 圖示設定為超大尺寸 */}
+              <span className="text-[100px] md:text-[150px] leading-none select-none">
                 {a.icon}
               </span>
               
@@ -48,20 +47,23 @@ export default function HomePage() {
               />
             </motion.button>
 
-            {/* 動物名稱 */}
-            <span className="mt-4 text-xl md:text-2xl font-black text-amber-900 whitespace-nowrap">
+            {/* 動物名稱：加粗放大 */}
+            <span className="mt-6 text-3xl md:text-5xl font-black text-amber-900 drop-shadow-sm">
               {a.name}
             </span>
           </div>
         ))}
       </div>
       
-      {/* 右上角選單 */}
-      <button className="absolute top-6 right-6 p-4 bg-white/30 rounded-2xl shadow-lg backdrop-blur-md">
-        <div className="space-y-1.5">
-          <div className="w-8 h-1.5 bg-amber-900 rounded-full"></div>
-          <div className="w-8 h-1.5 bg-amber-900 rounded-full"></div>
-          <div className="w-8 h-1.5 bg-amber-900 rounded-full"></div>
+      {/* 底部預留空間，確保捲動到底部時不會被遮擋 */}
+      <div className="h-20 w-full"></div>
+
+      {/* 右上角固定選單 */}
+      <button className="fixed top-8 right-8 p-5 bg-white/40 rounded-3xl shadow-xl backdrop-blur-md z-50">
+        <div className="space-y-2">
+          <div className="w-10 h-2 bg-amber-900 rounded-full"></div>
+          <div className="w-10 h-2 bg-amber-900 rounded-full"></div>
+          <div className="w-10 h-2 bg-amber-900 rounded-full"></div>
         </div>
       </button>
     </div>
