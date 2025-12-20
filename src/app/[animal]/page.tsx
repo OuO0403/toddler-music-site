@@ -36,52 +36,54 @@ export default function AnimalPage() {
       initial={{ borderRadius: '100%' }}
       animate={{ borderRadius: '0px' }}
       exit={{ borderRadius: '100%' }}
-      transition={{ duration: 0.35, ease: "easeInOut" }} // 縮短時間，平滑動畫解決抽搐
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-center z-[200] overflow-hidden"
+      transition={{ duration: 0.4 }}
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-16 z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 返回鍵：左上角 12px */}
-      <Link href="/" className="fixed top-3 left-3 text-6xl z-[300] drop-shadow-xl">🏠</Link>
+      {/* 修正：返回鍵固定左上角，距離邊框 12px */}
+      <Link href="/" className="fixed top-[12px] left-[12px] text-7xl z-[300] drop-shadow-2xl">🏠</Link>
 
-      <div className="w-full flex flex-col items-center justify-center px-4">
-        {/* 動物名稱 72px */}
-        <h2 className="text-[72px] font-black text-white mb-10 italic">{data.name}</h2>
+      {/* 動物名稱 72px */}
+      <h2 className="text-[72px] font-black text-white italic mb-10">{data.name}</h2>
 
-        {/* 中間主佈局：左播放、右動物 */}
-        <div className="flex flex-row items-center justify-center gap-20 mb-12 w-full">
-          <div className="relative">
-            <AnimatePresence>
-              {isPlaying && (
-                <motion.div 
-                  initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 2.2, opacity: 0 }}
-                  transition={{ duration: 1.2, repeat: Infinity }}
-                  className="absolute inset-0 rounded-full bg-gray-600/50"
-                />
-              )}
-            </AnimatePresence>
-            <button 
-              onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-48 h-48 md:w-64 md:h-64 bg-white"
-            >
-              <span className="text-8xl text-black">{isPlaying ? '⏸️' : '▶️'}</span>
-            </button>
-          </div>
-
-          <motion.div 
-            animate={isPlaying ? { y: [0, -20, 0], scale: [1, 1.05, 1] } : {}}
-            transition={{ repeat: Infinity, duration: 0.6 }}
-            className="text-[200px] md:text-[280px]"
+      {/* 主區域：左播放鍵、右動物圖示 (播放鍵加大至與動物一樣大) */}
+      <div className="flex flex-row items-center justify-center gap-12 md:gap-24 w-full px-10">
+        <div className="relative">
+          <AnimatePresence>
+            {isPlaying && (
+              <motion.div 
+                initial={{ scale: 1, opacity: 0.6 }}
+                animate={{ scale: 2.2, opacity: 0 }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="absolute inset-0 rounded-full bg-gray-600/40"
+              />
+            )}
+          </AnimatePresence>
+          {/* 修正：播放鍵 w-48 h-48 與動物圖示比例一致 */}
+          <button 
+            onClick={togglePlay}
+            className="zoo-circle-btn relative z-10 w-48 h-48 md:w-64 md:h-64 bg-white"
           >
-            {data.icon}
-          </motion.div>
+            <span className="text-8xl md:text-[140px] text-black ml-4">{isPlaying ? '⏸️' : '▶️'}</span>
+          </button>
         </div>
 
-        {/* 20px 置中文字內容 (無框線) */}
-        <div className="text-center text-white space-y-2">
-          <p className="text-[20px] font-medium opacity-90">動作提示：{data.action}</p>
-          <p className="text-[20px] font-bold tracking-widest">{data.note}</p>
-        </div>
+        {/* 修正：動物圖示位置上移 */}
+        <motion.div 
+          animate={isPlaying ? { y: [0, -30, 0], scale: [1, 1.1, 1] } : {}}
+          transition={{ repeat: Infinity, duration: 0.8 }}
+          className="text-[180px] md:text-[280px]"
+        >
+          {data.icon}
+        </motion.div>
+      </div>
+
+      {/* 修正：文字內容上移，避免被螢幕底部切到 */}
+      <div className="mt-12 text-center text-white space-y-4 px-6">
+        <p className="text-[20px] font-bold opacity-90">動作提示：{data.action}</p>
+        <p className="text-[24px] font-black tracking-widest leading-relaxed">
+          {data.note}
+        </p>
       </div>
 
       <audio ref={audioRef} src={`/audio/${animalId}.mp3`} loop onEnded={() => setIsPlaying(false)} />

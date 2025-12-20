@@ -2,91 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-grass: #4ade80; /* 飽滿的草原綠 */
-  --grass-pattern: #22c55e; /* 草苗深綠色 */
-}
-
-/* 1. 移除所有預設框架限制與邊距 */
 body {
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 100vh;
-  width: 100vw;
-  background-color: var(--bg-grass) !important;
-  
-  /* 繪製大顆、清晰且肉眼可見的草苗圖案 */
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q15 30 20 50 M15 50 Q18 35 21 50 M30 50 Q35 25 40 50 M50 50 Q55 35 60 50' fill='none' stroke='%2322c55e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-color: #4ade80 !important;
+  /* 加大草苗圖案 */
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q15 30 20 50 M15 50 Q18 35 21 50 M30 50 Q35 25 40 50 M50 50 Q55 35 60 50' fill='none' stroke='%2322c55e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
   background-size: 180px 180px !important;
-  
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* 2. 字體規格設定 */
-@layer components {
-  /* 首頁按鈕下方的 36 級粗體字 */
-  .text-zoo-36 {
-    font-size: 36px !important;
-    font-weight: 700 !important;
-    line-height: 1.2 !important;
-    letter-spacing: 0.05em;
-  }
-
-  /* 動物頁面名稱的 72 級粗體字 */
-  .text-zoo-72 {
-    font-size: 72px !important;
-    font-weight: 900 !important;
-    line-height: 1;
-  }
-
-  /* 動物頁面動作提示與口訣的 20 級置中文字 */
-  .text-zoo-20 {
-    font-size: 20px !important;
-    font-weight: 500 !important;
-    text-align: center !important;
-    width: 100%;
-  }
+.text-zoo-36 {
+  font-size: 36px !important;
+  font-weight: 700 !important;
 }
 
-/* 3. 巨大正圓按鈕規格 (12px 黑邊 + 深層陰影) */
 .zoo-circle-btn {
   aspect-ratio: 1 / 1 !important;
   border: 12px solid #000000 !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px !important;
-  overflow: hidden;
-  background-color: white;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 4. 優化轉場動畫穩定性 (防止抽搐) */
-.framer-motion-layout-container {
-  will-change: transform, opacity, border-radius;
-}
-
-/* 5. 灰色漣漪效果 */
-.ripple-bg {
-  position: absolute;
-  border-radius: 50%;
-  background-color: rgba(75, 85, 99, 0.4); /* 灰色漣漪 */
-  pointer-events: none;
-}
-
-/* 6. 移除所有強制置中的容器限制，確保過場溢出 */
-main, #__next {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-/* 7. 隱藏捲軸保持一頁了然 */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* 確保 grid 容器不會被壓縮 */
+.grid {
+  width: 100%;
 }
