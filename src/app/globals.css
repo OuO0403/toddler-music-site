@@ -7,12 +7,13 @@ html, body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; /* 徹底禁止滾動條 */
-  /* 使用草原風綠色漸層 */
-  background: linear-gradient(to bottom, #e0f2fe 0%, #dcfce7 100%); 
+  overflow: hidden; /* 禁止所有捲軸 */
+  background: linear-gradient(to bottom, #e0f2fe 0%, #dcfce7 100%);
 }
 
-/* 移除 Next.js 預設的所有干擾樣式 */
-* {
-  box-sizing: border-box;
+/* 確保按鈕本身沒有預設邊框 */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
