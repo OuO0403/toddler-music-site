@@ -1,5 +1,5 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
@@ -41,10 +41,10 @@ export default function AnimalPage() {
       animate={{ borderRadius: '0px' }}
       exit={{ borderRadius: '100%' }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-10 z-[200] overflow-hidden"
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[20px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 🏠 返回鍵：精確固定左上角，距離邊框 12px */}
+      {/* 🏠 返回鍵：精確固定左上角 12px */}
       <Link 
         href="/" 
         className="fixed top-[12px] left-[12px] text-[80px] z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
@@ -53,21 +53,21 @@ export default function AnimalPage() {
       </Link>
 
       <div className="w-full max-w-6xl flex flex-col items-center">
-        {/* 動物名稱：72px 粗體 */}
-        <h2 className="text-[72px] font-black text-white italic mb-8 drop-shadow-lg">
+        {/* 動物名稱：72px 粗體，縮小 mb 到 20px 騰出空間 */}
+        <h2 className="text-[72px] font-black text-white italic mb-[20px] drop-shadow-lg">
           {data.name}
         </h2>
 
-        {/* 主內容區：橫向排列播放鍵與動物 */}
-        <div className="flex flex-row items-center justify-center gap-[80px] mb-[60px] w-full px-[40px]">
+        {/* 主內容區：200px 等大佈局 */}
+        <div className="flex flex-row items-center justify-center gap-[40px] mb-[30px] w-full px-[40px]">
           
-          {/* 左側：巨大圓形播放鍵 (與圖示一樣大) */}
+          {/* 左側：播放鍵 */}
           <div className="relative flex-shrink-0">
             <AnimatePresence>
               {isPlaying && (
                 <motion.div 
                   initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 3, opacity: 0 }}
+                  animate={{ scale: 2.3, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                   className="absolute inset-0 rounded-full bg-gray-600/40 z-0"
                 />
@@ -75,34 +75,34 @@ export default function AnimalPage() {
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-[280px] h-[280px] bg-white active:scale-95 transition-all"
+              className="zoo-circle-btn relative z-10 w-[200px] h-[200px] bg-white active:scale-95 transition-all"
             >
-              <span className="text-[140px] text-black ml-[16px] select-none">
+              <span className="text-[100px] text-black ml-[10px] select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
             </button>
           </div>
 
-          {/* 右側：動物圖示 (連動動畫) */}
+          {/* 右側：動物圖示 */}
           <motion.div 
             animate={isPlaying ? { 
-              y: [0, -30, 0],
+              y: [0, -20, 0],
               rotate: [0, 5, -5, 0],
               scale: [1, 1.05, 1]
             } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="w-[280px] h-[280px] flex items-center justify-center text-[240px] drop-shadow-2xl select-none"
-            >
+            className="w-[200px] h-[200px] flex items-center justify-center text-[160px] drop-shadow-2xl select-none"
+          >
             {data.icon}
           </motion.div>
         </div>
 
-        {/* 底部文字：20px 置中文字，無框線 */}
-        <div className="text-center text-white space-y-4 px-6 max-w-2xl">
-          <p className="text-[20px] font-medium opacity-90 leading-snug">
+        {/* 底部文字：20px 置中，無框線 */}
+        <div className="text-center text-white space-y-2 px-6 max-w-2xl">
+          <p className="text-[20px] font-medium opacity-90 leading-tight">
             動作提示：{data.action}
           </p>
-          <p className="text-[20px] font-bold tracking-[0.2em] leading-relaxed">
+          <p className="text-[20px] font-bold tracking-[0.2em] leading-normal">
             {data.note}
           </p>
         </div>
