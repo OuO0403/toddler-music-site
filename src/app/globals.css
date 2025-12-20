@@ -2,18 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* 禁止所有捲軸 */
-  background: linear-gradient(to bottom, #e0f2fe 0%, #dcfce7 100%);
+:root {
+  --background: #fff9e6;
 }
 
-/* 確保按鈕本身沒有預設邊框 */
-button {
-  border: none;
-  background: none;
-  cursor: pointer;
+body {
+  background-color: var(--background);
+  color: #451a03;
+  margin: 0;
+  padding: 0;
+  /* 移除 overflow: hidden，讓內容可以自然滾動 */
+  min-height: 100vh;
+}
+
+/* 讓捲軸看起來更可愛（隱藏或美化） */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #f59e0b;
+  border-radius: 10px;
 }
