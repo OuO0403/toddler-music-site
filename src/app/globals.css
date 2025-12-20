@@ -2,10 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --grass-color: #dcfce7;
+  --bg-color: #f0fdf4;
+}
+
 body {
   margin: 0;
   padding: 0;
+  background: var(--bg-color);
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f2fe 0%, #fff9e6 100%);
-  overflow-y: auto !important; /* 強制啟用垂直捲軸 */
+  overflow-x: hidden;
+  /* 繪製隨機散佈的小草苗 */
+  background-image: 
+    radial-gradient(circle at 10% 20%, #86efac 1px, transparent 1px),
+    radial-gradient(circle at 30% 50%, #86efac 1.5px, transparent 1.5px),
+    radial-gradient(circle at 70% 10%, #86efac 1px, transparent 1px),
+    radial-gradient(circle at 90% 80%, #86efac 1.5px, transparent 1.5px),
+    radial-gradient(circle at 50% 90%, #86efac 1px, transparent 1px);
+  background-size: 200px 200px;
+}
+
+/* 確保全螢幕無白框 */
+* {
+  box-sizing: border-box;
 }
