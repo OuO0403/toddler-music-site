@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const animals = [
@@ -11,30 +11,30 @@ const animals = [
   { id: 'lion', name: '獅子', icon: '🦁', color: '#F9A825' },
 ];
 
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-[#FDFCF0] flex flex-col items-center py-[40px] px-[20px]">
-      <h1 className="text-[48px] font-black text-[#4A4A4A] mb-[40px] tracking-wider">
-        音樂動物園
-      </h1>
+export default function HomePage() {
+  const router = useRouter();
 
-      {/* 這裡設定一排 2 個 (grid-cols-2) 以及按鈕間距 */}
-      <div className="grid grid-cols-2 gap-[24px] w-full max-w-[600px]">
-        {animals.map((animal) => (
-          <Link key={animal.id} href={`/${animal.id}`} className="w-full">
-            <motion.div
-              layoutId={`bg-${animal.id}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full aspect-square rounded-[40px] flex flex-col items-center justify-center cursor-pointer shadow-lg"
-              style={{ backgroundColor: animal.color }}
+  return (
+    <div className="w-full min-h-screen flex flex-col items-center py-10 px-4">
+      <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl mb-12 italic">音樂動物園 🎵</h1>
+
+      {/* 修改處：grid-cols-2 (一排 2 個)，max-w 稍微縮小讓 2 列佈局視覺更集中 */}
+      <div className="grid grid-cols-2 gap-x-12 gap-y-[48px] w-full max-w-4xl justify-items-center">
+        {animals.map((a) => (
+          <div key={a.id} className="flex flex-col items-center w-full">
+            <motion.button
+              layoutId={`bg-${a.id}`}
+              onClick={() => router.push(`/${a.id}`)}
+              whileHover={{ scale: 1.1 }}
+              className="zoo-circle-btn relative w-full aspect-square max-w-[280px]"
+              style={{ backgroundColor: a.color }}
             >
-              <span className="text-[80px] select-none">{animal.icon}</span>
-              <span className="text-[24px] font-bold text-white mt-[8px]">{animal.name}</span>
-            </motion.div>
-          </Link>
+              <span className="text-[80px] md:text-[240px] select-none pointer-events-none">{a.icon}</span>
+            </motion.button>
+            <span className="mt-[12px] text-zoo-36 text-white drop-shadow-lg">{a.name}</span>
+          </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
