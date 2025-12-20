@@ -47,7 +47,7 @@ export default function AnimalPage() {
       {/* 🏠 返回鍵：精確固定左上角，距離邊框 12px */}
       <Link 
         href="/" 
-        className="fixed top-[12px] left-[12px] text-7xl z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
+        className="fixed top-[12px] left-[12px] text-[72px] z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
       >
         🏠
       </Link>
