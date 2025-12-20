@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 
-// 必須包含這個定義，編譯才會通過
 const animalData: Record<string, { name: string; icon: string; color: string; note: string; action: string }> = {
   elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚', action: '重音踏腳、強調一三拍重音' },
   rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳', action: '拍大腿、感受八分音符輕快感' },
@@ -21,7 +20,7 @@ export default function AnimalPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  if (!data) return <div className="text-white">Loading...</div>;
+  if (!data) return null;
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -42,57 +41,63 @@ export default function AnimalPage() {
       animate={{ borderRadius: '0px' }}
       exit={{ borderRadius: '100%' }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[40px] z-[200] overflow-hidden"
+      /* pt-[20px] 讓整體更靠頂部 */
+      className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[20px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 🏠 返回鍵：小尺寸 80px，無邊框 */}
+      {/* 1. 🏠 返回鍵：移除圓圈底色，直接顯示圖示 */}
       <Link 
         href="/" 
         className="fixed top-[16px] left-[16px] z-[300] transition-transform hover:scale-110 active:scale-90"
       >
-        <div className="zoo-circle-btn w-[80px] h-[80px] bg-white border-none shadow-lg flex items-center justify-center rounded-full">
-          <span className="text-[40px] select-none">🏠</span>
-        </div>
+        <span className="text-[60px] select-none">🏠</span>
       </Link>
 
       <div className="w-full max-w-6xl flex flex-col items-center">
-        <h2 className="text-[72px] font-black text-white italic mb-[30px] drop-shadow-lg">
+        {/* 標題：mb-[20px] 縮小，讓標題看起來更高 */}
+        <h2 className="text-[72px] font-black text-white italic mb-[20px] drop-shadow-lg">
           {data.name}
         </h2>
 
-        {/* 主內容區：兩個 200px 圓圈 */}
-        <div className="flex flex-row items-center justify-center gap-[60px] mb-[40px] w-full px-[40px]">
+        {/* 主內容區 */}
+        <div className="flex flex-row items-center justify-center gap-[80px] mb-[40px] w-full px-[40px]">
           
-          <div className="relative flex-shrink-0">
+          {/* 2. ▶️ 播放鍵：移除 bg-white 和 zoo-circle-btn，只留透明背景和灰色漣漪 */}
+          <div className="relative flex-shrink-0 flex items-center justify-center w-[200px] h-[200px]">
             <AnimatePresence>
               {isPlaying && (
                 <motion.div 
-                  initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 2.2, opacity: 0 }}
+                  initial={{ scale: 0.5, opacity: 0.6 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
-                  className="absolute inset-0 rounded-full bg-gray-600/30 z-0"
+                  className="absolute inset-0 rounded-full bg-white/30 z-0"
                 />
               )}
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-[200px] h-[200px] bg-white border-none active:scale-95 transition-all shadow-xl flex items-center justify-center rounded-full"
+              className="relative z-10 w-[200px] h-[200px] flex items-center justify-center active:scale-95 transition-all"
             >
-              <span className="text-[100px] text-black ml-[10px] select-none">
+              <span className="text-[140px] text-white select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
             </button>
           </div>
 
+          {/* 3. 🐘 動物圖示：移除白色圓圈，直接顯示 Emoji */}
           <motion.div 
-            animate={isPlaying ? { y: [0, -20, 0], rotate: [0, 5, -5, 0], scale: [1, 1.05, 1] } : {}}
+            animate={isPlaying ? { 
+              y: [0, -30, 0],
+              scale: [1, 1.1, 1]
+            } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="zoo-circle-btn w-[200px] h-[200px] bg-white flex items-center justify-center text-[140px] shadow-xl border-none select-none rounded-full"
+            className="w-[200px] h-[200px] flex items-center justify-center text-[180px] drop-shadow-2xl select-none"
           >
             {data.icon}
           </motion.div>
         </div>
 
+        {/* 底部文字 */}
         <div className="text-center text-white space-y-2 px-6 max-w-2xl">
           <p className="text-[20px] font-medium opacity-90">動作提示：{data.action}</p>
           <p className="text-[20px] font-bold tracking-[0.2em]">{data.note}</p>
