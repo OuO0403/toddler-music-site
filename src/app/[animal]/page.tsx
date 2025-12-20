@@ -47,7 +47,7 @@ export default function AnimalPage() {
       {/* 🏠 返回鍵：精確固定左上角，距離邊框 12px */}
       <Link 
         href="/" 
-        className="fixed top-[12px] left-[12px] text-[72px] z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
+        className="fixed top-[12px] left-[12px] text-[80px] z-[300] drop-shadow-2xl hover:scale-110 active:scale-90 transition-transform"
       >
         🏠
       </Link>
@@ -59,7 +59,7 @@ export default function AnimalPage() {
         </h2>
 
         {/* 主內容區：橫向排列播放鍵與動物 */}
-        <div className="flex flex-row items-center justify-center gap-12 md:gap-24 w-full mb-12">
+        <div className="flex flex-row items-center justify-center gap-[80px] mb-[60px] w-full px-[40px]">
           
           {/* 左側：巨大圓形播放鍵 (與圖示一樣大) */}
           <div className="relative flex-shrink-0">
@@ -67,7 +67,7 @@ export default function AnimalPage() {
               {isPlaying && (
                 <motion.div 
                   initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 10, opacity: 0 }}
+                  animate={{ scale: 3, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                   className="absolute inset-0 rounded-full bg-gray-600/40 z-0"
                 />
@@ -75,9 +75,9 @@ export default function AnimalPage() {
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-64 h-64 md:w-80 md:h-80 bg-white active:scale-95 transition-all"
+              className="zoo-circle-btn relative z-10 w-[280px] h-[280px] bg-white active:scale-95 transition-all"
             >
-              <span className="text-8xl md:text-[140px] text-black ml-4 select-none">
+              <span className="text-[140px] text-black ml-[16px] select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
             </button>
@@ -91,7 +91,7 @@ export default function AnimalPage() {
               scale: [1, 1.05, 1]
             } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="w-64 h-64 md:w-80 md:h-80 flex items-center justify-center text-[180px] md:text-[280px] drop-shadow-2xl select-none"
+            className="w-[280px] h-[280px] flex items-center justify-center text-[240px] drop-shadow-2xl select-none"
             >
             {data.icon}
           </motion.div>
