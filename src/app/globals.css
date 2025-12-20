@@ -19,7 +19,7 @@ body {
 
 .zoo-circle-btn {
   aspect-ratio: 1 / 1 !important;
-  border: 12px solid #000000 !important;
+  border: none !important; 
   box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
   display: flex;
   align-items: center;
