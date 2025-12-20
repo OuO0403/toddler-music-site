@@ -29,7 +29,7 @@ export default function HomePage() {
               className="zoo-circle-btn relative w-full aspect-square max-w-[280px]"
               style={{ backgroundColor: a.color }}
             >
-              <span className="text-[60px] md:text-[200px] select-none">{a.icon}</span>
+              <span className="text-[80px] md:text-[240px] select-none pointer-events-none">{a.icon}</span>
             </motion.button>
             <span className="mt-[12px] text-zoo-36 text-white drop-shadow-lg">{a.name}</span>
           </div>
