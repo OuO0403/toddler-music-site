@@ -44,7 +44,7 @@ export default function AnimalPage() {
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[20px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 1. 返回鍵：無邊框直接顯示圖示 */}
+      {/* 1. 返回鍵：無邊框 */}
       <Link 
         href="/" 
         className="fixed top-[16px] left-[16px] z-[300] transition-transform hover:scale-110 active:scale-90"
@@ -61,7 +61,7 @@ export default function AnimalPage() {
         {/* 主內容區 */}
         <div className="flex flex-row items-center justify-center gap-[80px] mb-[40px] w-full px-[40px]">
           
-          {/* 2. 播放鍵：透明背景，無白邊 */}
+          {/* 2. 播放鍵：透明背景，增加 Hover 放大動畫 */}
           <div className="relative flex-shrink-0 flex items-center justify-center w-[200px] h-[200px]">
             <AnimatePresence>
               {isPlaying && (
@@ -74,18 +74,21 @@ export default function AnimalPage() {
               )}
             </AnimatePresence>
             
-            <button 
+            <motion.button 
               onClick={togglePlay}
-              className="relative z-10 w-full h-full flex items-center justify-center active:scale-95 transition-all bg-transparent border-none outline-none"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="relative z-10 w-full h-full flex items-center justify-center bg-transparent border-none outline-none cursor-pointer"
             >
               <span className="text-[140px] text-white drop-shadow-md select-none">
                 {isPlaying ? '⏸️' : '▶️'}
               </span>
-            </button>
+            </motion.button>
           </div>
 
-          {/* 3. 動物圖示：透明背景直接顯示 */}
+          {/* 3. 動物圖示：透明背景，增加 Hover 放大動畫 */}
           <motion.div 
+            whileHover={{ scale: 1.1 }}
             animate={isPlaying ? { 
               y: [0, -30, 0],
               scale: [1, 1.1, 1]
