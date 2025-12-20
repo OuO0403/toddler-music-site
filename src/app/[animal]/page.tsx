@@ -4,7 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 
-// ... animalData 資料保持不變 ...
+// 必須包含這個定義，編譯才會通過
+const animalData: Record<string, { name: string; icon: string; color: string; note: string; action: string }> = {
+  elephant: { name: '大象', icon: '🐘', color: '#8E949E', note: '咚、咚、咚、咚', action: '重音踏腳、強調一三拍重音' },
+  rabbit: { name: '小兔子', icon: '🐰', color: '#FFB7C5', note: '蹦蹦、蹦蹦、跳、跳', action: '拍大腿、感受八分音符輕快感' },
+  snake: { name: '小蛇', icon: '🐍', color: '#88D498', note: '嘶 —— 、嘶 ——', action: '手掌互搓、練習長音與空間感' },
+  woodpecker: { name: '啄木鳥', icon: '🐦', color: '#FF6B6B', note: '噠噠噠、噠', action: '指尖輕敲、訓練指尖靈活性' },
+  gorilla: { name: '大猩猩', icon: '🦍', color: '#6D4C41', note: '嗚、哈、嗚嗚、哈', action: '左右交替拍胸、訓練中軸線' },
+  lion: { name: '獅子', icon: '🦁', color: '#F9A825', note: '吼！吼！吼！', action: '向前抓吼叫、練習爆發與靜止對比' },
+};
 
 export default function AnimalPage() {
   const params = useParams();
@@ -13,7 +21,7 @@ export default function AnimalPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  if (!data) return null;
+  if (!data) return <div className="text-white">Loading...</div>;
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -37,26 +45,24 @@ export default function AnimalPage() {
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-start pt-[40px] z-[200] overflow-hidden"
       style={{ backgroundColor: data.color }}
     >
-      {/* 1. 🏠 返回鍵：縮小到 80px，無邊框 */}
+      {/* 🏠 返回鍵：小尺寸 80px，無邊框 */}
       <Link 
         href="/" 
         className="fixed top-[16px] left-[16px] z-[300] transition-transform hover:scale-110 active:scale-90"
       >
-        <div className="zoo-circle-btn w-[80px] h-[80px] bg-white border-none shadow-lg">
+        <div className="zoo-circle-btn w-[80px] h-[80px] bg-white border-none shadow-lg flex items-center justify-center rounded-full">
           <span className="text-[40px] select-none">🏠</span>
         </div>
       </Link>
 
       <div className="w-full max-w-6xl flex flex-col items-center">
-        {/* 動物名稱 */}
         <h2 className="text-[72px] font-black text-white italic mb-[30px] drop-shadow-lg">
           {data.name}
         </h2>
 
-        {/* 主內容區：兩個 200px 圓圈橫向排列 */}
+        {/* 主內容區：兩個 200px 圓圈 */}
         <div className="flex flex-row items-center justify-center gap-[60px] mb-[40px] w-full px-[40px]">
           
-          {/* 2. ▶️ 播放鍵：加大到 200px，無邊框 */}
           <div className="relative flex-shrink-0">
             <AnimatePresence>
               {isPlaying && (
@@ -70,7 +76,7 @@ export default function AnimalPage() {
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-[200px] h-[200px] bg-white border-none active:scale-95 transition-all shadow-xl"
+              className="zoo-circle-btn relative z-10 w-[200px] h-[200px] bg-white border-none active:scale-95 transition-all shadow-xl flex items-center justify-center rounded-full"
             >
               <span className="text-[100px] text-black ml-[10px] select-none">
                 {isPlaying ? '⏸️' : '▶️'}
@@ -78,24 +84,18 @@ export default function AnimalPage() {
             </button>
           </div>
 
-          {/* 3. 🐘 動物圖示：加大到 200px，與播放鍵一樣大，無邊框 */}
           <motion.div 
             animate={isPlaying ? { y: [0, -20, 0], rotate: [0, 5, -5, 0], scale: [1, 1.05, 1] } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="zoo-circle-btn w-[200px] h-[200px] bg-white flex items-center justify-center text-[140px] shadow-xl border-none select-none"
+            className="zoo-circle-btn w-[200px] h-[200px] bg-white flex items-center justify-center text-[140px] shadow-xl border-none select-none rounded-full"
           >
             {data.icon}
           </motion.div>
         </div>
 
-        {/* 底部文字：20px */}
         <div className="text-center text-white space-y-2 px-6 max-w-2xl">
-          <p className="text-[20px] font-medium opacity-90 leading-snug">
-            動作提示：{data.action}
-          </p>
-          <p className="text-[20px] font-bold tracking-[0.2em]">
-            {data.note}
-          </p>
+          <p className="text-[20px] font-medium opacity-90">動作提示：{data.action}</p>
+          <p className="text-[20px] font-bold tracking-[0.2em]">{data.note}</p>
         </div>
       </div>
 
