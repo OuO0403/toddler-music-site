@@ -19,17 +19,17 @@ export default function HomePage() {
       <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl mb-12 italic">音樂動物園 🎵</h1>
 
       {/* 修正：強制 3 個一排 (grid-cols-3)，間距 72px */}
-      <div className="grid grid-cols-3 gap-x-8 gap-y-[72px] w-full max-w-6xl justify-items-center">
+      <div className="grid grid-cols-3 gap-x-6 gap-y-[48px] w-full max-w-6xl justify-items-center">
         {animals.map((a) => (
           <div key={a.id} className="flex flex-col items-center w-full">
             <motion.button
               layoutId={`bg-${a.id}`}
               onClick={() => router.push(`/${a.id}`)}
               whileHover={{ scale: 1.1 }}
-              className="zoo-circle-btn relative w-full aspect-square max-w-[220px]"
+              className="zoo-circle-btn relative w-full aspect-square max-w-[280px]"
               style={{ backgroundColor: a.color }}
             >
-              <span className="text-[60px] md:text-[120px] select-none">{a.icon}</span>
+              <span className="text-[60px] md:text-[200px] select-none">{a.icon}</span>
             </motion.button>
             <span className="mt-[12px] text-zoo-36 text-white drop-shadow-lg">{a.name}</span>
           </div>
