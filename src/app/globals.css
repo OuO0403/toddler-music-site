@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  /* 使用標準 CSS 語法 */
-  background: linear-gradient(135deg, #fff9e6 0%, #ffedcc 100%);
-  min-height: 100vh; /* 這是 min-h-screen 的標準寫法 */
-  overflow-x: hidden;
-  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft JhengHei', sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* 徹底禁止滾動條 */
+  /* 使用草原風綠色漸層 */
+  background: linear-gradient(to bottom, #e0f2fe 0%, #dcfce7 100%); 
+}
+
+/* 移除 Next.js 預設的所有干擾樣式 */
+* {
+  box-sizing: border-box;
 }

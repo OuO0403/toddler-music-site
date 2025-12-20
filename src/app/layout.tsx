@@ -1,23 +1,15 @@
 import './globals.css';
-import AnimalSidebar from '@/components/AnimalSidebar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-Hant">
-      <body>
-        <div className="flex flex-col min-h-screen">
-          {/* 上排導覽列：我們稍微修改 Sidebar 的名稱為 Navbar */}
-          <header className="w-full pt-6 px-10">
-            <AnimalSidebar />
-          </header>
-          
-          {/* 主內容區：置中並放大 */}
-          <main className="flex-grow flex items-center justify-center p-6">
-            <div className="w-full max-w-5xl bg-white/60 backdrop-blur-md rounded-[40px] shadow-2xl p-10 border-8 border-white">
-              {children}
-            </div>
-          </main>
-        </div>
+      <body className="relative w-screen h-screen">
+        {/* 裝飾用的草原小細節：可以在這裡放些雲朵或小草的背景裝飾 */}
+        <div className="absolute bottom-0 w-full h-32 bg-green-200/50 z-0"></div>
+        
+        <main className="relative z-10 w-full h-full flex items-center justify-center">
+          {children}
+        </main>
       </body>
     </html>
   );
