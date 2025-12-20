@@ -67,7 +67,7 @@ export default function AnimalPage() {
               {isPlaying && (
                 <motion.div 
                   initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 2.3, opacity: 0 }}
+                  animate={{ scale: 10, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                   className="absolute inset-0 rounded-full bg-gray-600/40 z-0"
                 />
@@ -75,7 +75,7 @@ export default function AnimalPage() {
             </AnimatePresence>
             <button 
               onClick={togglePlay}
-              className="zoo-circle-btn relative z-10 w-48 h-48 md:w-64 md:h-64 bg-white active:scale-95 transition-all"
+              className="zoo-circle-btn relative z-10 w-64 h-64 md:w-80 md:h-80 bg-white active:scale-95 transition-all"
             >
               <span className="text-8xl md:text-[140px] text-black ml-4 select-none">
                 {isPlaying ? '⏸️' : '▶️'}
@@ -91,8 +91,8 @@ export default function AnimalPage() {
               scale: [1, 1.05, 1]
             } : {}}
             transition={{ repeat: Infinity, duration: 0.8 }}
-            className="text-[200px] md:text-[280px] drop-shadow-2xl select-none"
-          >
+            className="w-64 h-64 md:w-80 md:h-80 flex items-center justify-center text-[180px] md:text-[280px] drop-shadow-2xl select-none"
+            >
             {data.icon}
           </motion.div>
         </div>
